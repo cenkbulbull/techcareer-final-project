@@ -1,5 +1,6 @@
 <template>
-    <div>
-        Home
-    </div>
+    <ProductsDataView/>
 </template>
+<script setup>
+import ProductsDataView from '../components/ProductsDataView.vue';
+</script>
