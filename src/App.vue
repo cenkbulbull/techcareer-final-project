@@ -5,3 +5,8 @@
     <Navbar/>
     <router-view/>
 </template>
+<style>
+body{
+    background-color: #f8fafc;
+}
+</style>
