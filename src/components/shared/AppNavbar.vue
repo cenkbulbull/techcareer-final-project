@@ -6,7 +6,7 @@
       </template>
       <template #item="{ item, props, hasSubmenu, root }">
         <a v-ripple class="flex align-items-center" v-bind="props.action">
-          <span class="ml-2"><router-link class="nav-item" :to="item.url">{{ item.label }}</router-link></span>
+          <span class="ml-2"><router-link active-class="active" class="nav-item" :to="item.url">{{ item.label }}</router-link></span>
         </a>
       </template>
       <template #end>
@@ -39,12 +39,12 @@ const items = ref([
   },
   {
     label: "Men's clothing",
-    url:"/mensclothing",
+    url:"/men's clothing",
     icon: "pi pi-star",
   },
   {
     label: "Women's clothing",
-    url:"/womensclothing",
+    url:"/women's clothing",
     icon: "pi pi-star",
   }
 ]);
@@ -53,5 +53,8 @@ const items = ref([
 .nav-item{
   color: #000 !important;
   text-decoration: none !important;
+}
+.active{
+  color: #00c26d !important;
 }
 </style>

@@ -23,7 +23,7 @@
                 <img
                   class="border-round w-full"
                   :src="item.image"
-                  style="max-width: 300px; height: 200px;"
+                  style="max-width: 300px; height: 200px"
                 />
               </div>
             </div>
@@ -63,7 +63,6 @@
                   <Button
                     icon="pi pi-shopping-cart"
                     label="Add to cart"
-                    :disabled="item.inventoryStatus === 'OUTOFSTOCK'"
                     class="flex-auto white-space-nowrap"
                   ></Button>
                   <Button icon="pi pi-heart" outlined></Button>
@@ -78,14 +77,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import ProductsService from "../services/products/index";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
+
+watch(
+  () => route.params.category,
+  (to, from) => {
+    ProductsService.getByCategoryProducts(route.params.category).then(
+      (data) => {
+        products.value = data;
+      }
+    );
+  }
+);
 onMounted(() => {
-  ProductsService.getAllProducts().then((data) => {
-    console.log(data);
-    products.value = data;
-  });
+  if (route.params.category != undefined) {
+    ProductsService.getByCategoryProducts(route.params.category).then(
+      (data) => {
+        products.value = data;
+      }
+    );
+  } else {
+    ProductsService.getAllProducts().then((data) => {
+      products.value = data;
+    });
+  }
 });
 
 const products = ref();
