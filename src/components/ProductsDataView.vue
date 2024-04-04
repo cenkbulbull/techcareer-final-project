@@ -61,6 +61,7 @@
                 >
                 <div class="flex gap-2">
                   <Button
+                    @click="addToCart(item)"
                     icon="pi pi-shopping-cart"
                     label="Add to cart"
                     class="flex-auto white-space-nowrap"
@@ -86,6 +87,10 @@ const store = useProducts();
 
 const addFavorites = (product) =>{
   store.setFavorites(product)
+}
+
+const addToCart = (product) =>{
+  store.setProducts(product)
 }
 const route = useRoute();
 
