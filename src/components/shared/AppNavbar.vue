@@ -25,27 +25,26 @@ const items = ref([
   {
     label: "Home",
     url:"/",
-    icon: "pi pi-home",
   },
   {
     label: "Electronics",
     url:"/electronics",
-    icon: "pi pi-star",
   },
   {
     label: "Jewelery",
     url:"/jewelery",
-    icon: "pi pi-star",
   },
   {
     label: "Men's clothing",
     url:"/men's clothing",
-    icon: "pi pi-star",
   },
   {
     label: "Women's clothing",
     url:"/women's clothing",
-    icon: "pi pi-star",
+  },
+  {
+    label: "Favorites",
+    url:"/favorites",
   }
 ]);
 </script>
