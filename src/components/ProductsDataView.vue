@@ -83,11 +83,16 @@ import { ref, onMounted, watch } from "vue";
 import ProductsService from "../services/products/index";
 import { useRoute } from "vue-router";
 import { useProducts } from "../store/index";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const store = useProducts();
 
 const addFavorites = (product) =>{
   store.setFavorites(product)
+  toast.success(`${product.title} Favorilere Eklendi`, {
+    position: toast.POSITION.TOP_CENTER,
+  });
 }
 
 const addToCart = (product) =>{

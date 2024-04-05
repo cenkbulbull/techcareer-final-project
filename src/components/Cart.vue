@@ -37,7 +37,7 @@
             <span class="mt-3">%20 indirim kazanmak için kupon kodunu girin.</span>
             <div class="flex">
               <InputOtp v-model="couponCode" :length="5" />
-              <Button class="ml-2" :label="'Payment '+ getTotalPrice + '$'" />
+              <Button class="ml-2" :label="'Pay '+ getTotalPrice + '$'" />
             </div>
           </ul>
         </div>
