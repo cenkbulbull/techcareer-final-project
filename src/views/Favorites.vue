@@ -54,13 +54,14 @@
                 >
                 <div class="flex gap-2">
                   <Button
+                    @click="addToCart(fav)"
                     icon="pi pi-shopping-cart"
                     label="Add to cart"
                     class="flex-auto white-space-nowrap"
                   ></Button>
                   <Button
-                    @click="addFavorites(item)"
-                    icon="pi pi-heart"
+                    @click="removeFavorites(fav.id)"
+                    icon="pi pi-heart-fill"
                     outlined
                   ></Button>
                 </div>
@@ -73,15 +74,26 @@
   </DataView>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useProducts } from "../store/index";
 
 const store = useProducts();
 
-const favorites = ref([]);
+const removeFavorites = (id) =>{
+  store.removeFavorites(id)
+}
 
-store.getFavorites.map((product) => {
-  favorites.value.push(product);
+const addToCart = (product) =>{
+  store.setProducts(product)
+}
+
+const favorites = computed(() => {
+  const favorites = ref([]);
+  store.getFavorites.map((product) => {
+    favorites.value.push(product);
+  });
+  console.log(favorites.value)
+  return favorites.value;
 });
 
 const layout = ref("grid");
