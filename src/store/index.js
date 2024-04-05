@@ -4,6 +4,7 @@ export const useProducts = defineStore('products', {
   state: () => ({
     products: JSON.parse(localStorage.getItem('productsInCart')) || [],
     favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+    totalPrice: 0
   }),
   getters: {
     getAllProducts(state){
@@ -14,7 +15,11 @@ export const useProducts = defineStore('products', {
       state.products.map((product)=>{
         totalPrice += Number(product.price)
       })
-      return totalPrice
+      state.totalPrice = totalPrice
+      return state.totalPrice
+    },
+    getDiscountedPrice(state){
+      return state.totalPrice
     },
     getFavorites(state){
       return state.favorites
@@ -37,5 +42,8 @@ export const useProducts = defineStore('products', {
       this.products = this.products.filter(product => product.id !== id);
       localStorage.setItem('productsInCart', JSON.stringify(this.products));
     },
+    addDiscount(){
+      this.totalPrice = this.getTotalPrice * 0.8
+    }
   },
 })

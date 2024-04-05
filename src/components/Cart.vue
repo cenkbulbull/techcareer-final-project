@@ -37,7 +37,7 @@
             <span class="mt-3">%20 indirim kazanmak için kupon kodunu girin.</span>
             <div class="flex">
               <InputOtp v-model="couponCode" :length="5" />
-              <Button class="ml-2" :label="'Pay '+ getTotalPrice + '$'" />
+              <Button @click="$router.push('/payment')" class="ml-2" :label="'Pay '+ getTotalPrice + '$'" />
             </div>
           </ul>
         </div>
@@ -64,7 +64,8 @@ const couponCode = ref()
 
 const getTotalPrice = computed(()=>{
     if(couponCode.value == import.meta.env.VITE_APP_COUPON_CODE){
-      return Math.ceil(store.getTotalPrice * 0.8)
+      store.addDiscount()
+      return store.getDiscountedPrice
     }
     return store.getTotalPrice
 })

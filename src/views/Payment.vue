@@ -193,7 +193,7 @@ const payment = ref({
 })
 
 onMounted(()=>{
-  payment.value.price = store.getTotalPrice
+  payment.value.price = store.getDiscountedPrice
 })
 </script>
 <style scoped>
