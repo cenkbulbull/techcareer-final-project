@@ -52,6 +52,7 @@ import Inplace from 'primevue/inplace';
 import InputSwitch from 'primevue/inputswitch';
 import InputText from 'primevue/inputtext';
 import InputMask from 'primevue/inputmask';
+import InputOtp from 'primevue/inputotp';
 import InputNumber from 'primevue/inputnumber';
 import Knob from 'primevue/knob';
 import Listbox from 'primevue/listbox';
@@ -153,6 +154,7 @@ app.component('InputMask', InputMask);
 app.component('InputNumber', InputNumber);
 app.component('InputSwitch', InputSwitch);
 app.component('InputText', InputText);
+app.component('InputOtp', InputOtp)
 app.component('Knob', Knob);
 app.component('Listbox', Listbox);
 app.component('MegaMenu', MegaMenu);

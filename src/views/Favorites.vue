@@ -92,7 +92,6 @@ const favorites = computed(() => {
   store.getFavorites.map((product) => {
     favorites.value.push(product);
   });
-  console.log(favorites.value)
   return favorites.value;
 });
 
