@@ -1,29 +1,18 @@
 <template>
-  <DataView :value="products" :layout="layout">
-    <!--<template #header>
-      <div class="flex justify-content-end">
-        <span>Sıralama seçenekleri gelecek</span>
-      </div>
-    </template>-->
-
+  <DataView :value="product" :layout="layout">
     <template #grid="slotProps">
       <div class="grid grid-nogutter">
-        <div
-          v-for="(item, index) in slotProps.items"
-          :key="index"
-          class="col-12 sm:col-6 md:col-4 xl:col-6 p-2"
-        >
+        <div class="col-12 p-2">
           <div
             class="p-4 border-1 surface-border surface-card border-round flex flex-column justify-content-between"
           >
             <div
-              @click="$router.push('/product/'+item.id)"
               class="surface-50 flex justify-content-center border-round p-3"
             >
               <div class="relative mx-auto">
                 <img
                   class="border-round w-full"
-                  :src="item.image"
+                  :src="product.image"
                   style="max-width: 300px; height: 200px"
                 />
               </div>
@@ -34,10 +23,11 @@
               >
                 <div>
                   <span class="font-medium text-secondary text-sm">{{
-                    item.category
+                    product.category
                   }}</span>
                   <div class="text-lg font-medium text-900 mt-1">
-                    {{ item.title }}
+                    {{ product.title }} <br /><br />
+                    {{ product.description }}
                   </div>
                 </div>
                 <div class="surface-100 p-1" style="border-radius: 30px">
@@ -50,7 +40,7 @@
                     "
                   >
                     <span class="text-900 font-medium text-sm">{{
-                      item.rating.rate
+                      product.rating.rate
                     }}</span>
                     <i class="pi pi-star-fill text-yellow-500"></i>
                   </div>
@@ -58,16 +48,20 @@
               </div>
               <div class="flex flex-column gap-4 mt-4">
                 <span class="text-2xl font-semibold text-900"
-                  >${{ item.price }}</span
+                  >${{ product.price }}</span
                 >
                 <div class="flex gap-2">
                   <Button
-                    @click="addToCart(item)"
+                    @click="addToCart(product)"
                     icon="pi pi-shopping-cart"
                     label="Add to cart"
                     class="flex-auto white-space-nowrap"
                   ></Button>
-                  <Button @click="addFavorites(item)" icon="pi pi-heart" outlined></Button>
+                  <Button
+                    @click="addFavorites(product)"
+                    icon="pi pi-heart"
+                    outlined
+                  ></Button>
                 </div>
               </div>
             </div>
@@ -77,48 +71,29 @@
     </template>
   </DataView>
 </template>
-
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import ProductsService from "../services/products/index";
-import { useRoute } from "vue-router";
 import { useProducts } from "../store/index";
+import { useRoute } from "vue-router";
 
-const store = useProducts();
-
-const addFavorites = (product) =>{
-  store.setFavorites(product)
-}
-
-const addToCart = (product) =>{
-  store.setProducts(product)
-}
 const route = useRoute();
+const store = useProducts();
+const product = ref();
 
-watch(
-  () => route.params.category,
-  (to, from) => {
-    ProductsService.getByCategoryProducts(route.params.category).then(
-      (data) => {
-        products.value = data;
-      }
-    );
-  }
-);
 onMounted(() => {
-  if (route.params.category != undefined) {
-    ProductsService.getByCategoryProducts(route.params.category).then(
-      (data) => {
-        products.value = data;
-      }
-    );
-  } else {
-    ProductsService.getAllProducts().then((data) => {
-      products.value = data;
-    });
-  }
+  ProductsService.getAllProducts().then((products) => {
+    product.value = products.find((product) => product.id == route.params.id);
+  });
 });
 
-const products = ref();
+const addFavorites = (product) => {
+  store.setFavorites(product);
+};
+
+const addToCart = (product) => {
+  store.setProducts(product);
+};
+
 const layout = ref("grid");
 </script>

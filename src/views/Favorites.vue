@@ -10,6 +10,7 @@
             class="p-4 border-1 surface-border surface-card border-round flex flex-column justify-content-between"
           >
             <div
+              @click="$router.push('/product/'+fav.id)"
               class="surface-50 flex justify-content-center border-round p-3"
             >
               <div class="relative mx-auto">
