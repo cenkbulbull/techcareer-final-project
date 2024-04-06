@@ -1,5 +1,6 @@
 <script setup>
 import Navbar from "./components/shared/AppNavbar.vue";
+import Footer from "./components/shared/AppFooter.vue";
 import { onMounted } from "vue";
 import { useUser } from "./store/index";
 
@@ -12,6 +13,7 @@ onMounted(async()=>{
 <template>
   <Navbar />
   <router-view />
+  <Footer />
 </template>
 <style>
 body {
