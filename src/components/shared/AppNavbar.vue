@@ -10,8 +10,10 @@
         </a>
       </template>
       <template #end>
-        <router-link to="/auth/login"><Button label="Login"/></router-link>
-        <Cart/>
+        <div class="flex">
+          <router-link to="/auth/login" class="mr-1"><Button label="Login"/></router-link>
+          <Cart/>
+        </div>
       </template>
     </Menubar>
   </div>
