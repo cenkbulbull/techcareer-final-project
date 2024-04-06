@@ -8,20 +8,23 @@
                         <p>Hesabınız yoksa hemen <router-link to="register">kayıt olun.</router-link></p>
                     </div>
                     <div>
-                        <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <InputText id="email" type="text" placeholder="Email" class="w-full md:w-30rem mb-5" style="padding: 1rem" v-model="email" />
+                        <!--<label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+                        <InputText v-model="user.email" id="email" type="text" placeholder="Email" class="w-full md:w-30rem mb-5" style="padding: 1rem" />-->
+
+                        <label for="email" class="block text-900 text-xl font-medium mb-2">Kullanıcı adı</label>
+                        <InputText v-model="user.username" id="username" type="text" placeholder="Username" class="w-full md:w-30rem mb-5" style="padding: 1rem" />
 
                         <label for="password" class="block text-900 font-medium text-xl mb-2">Şifre</label>
-                        <Password id="password" v-model="password" placeholder="Şifre" :toggleMask="true" :feedback="false" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
+                        <Password v-model="user.password" id="password" placeholder="Password" :toggleMask="true" :feedback="false" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
 
                         <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">
-                                <Checkbox v-model="rememberme" id="rememberme" binary class="mr-2"></Checkbox>
+                                <Checkbox id="rememberme" binary class="mr-2"></Checkbox>
                                 <label for="rememberme">Beni Hatırla</label>
                             </div>
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Şifremi Unuttum</a>
                         </div>
-                        <Button label="Giriş Yap" class="w-full p-3 text-xl"></Button>
+                        <Button @click="login" label="Giriş Yap" class="w-full p-3 text-xl"></Button>
                     </div>
                 </div>
             </div>
@@ -30,10 +33,19 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import { useUser } from "../../store/index";
 
-const email = ref('');
-const password = ref('');
-const rememberme = ref(false);
+const store = useUser();
+
+const user = ref({
+    username: "",
+    password: ""
+})
+//const rememberme = ref(false);
+
+const login = () =>{
+    store.login(user.value)
+}
 
 </script>
 

@@ -84,6 +84,7 @@
             ></Password>
 
             <Button
+              @click="signup()"
               label="Kayıt Ol"
               class="w-full p-3 text-xs"
             ></Button>
@@ -95,6 +96,8 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const user = ref({
   name: {
@@ -105,6 +108,12 @@ const user = ref({
   password:"",
   tel: "",
 });
+
+const signup = () => {
+  toast.info(`Hazır Api olduğundan veri eklenmemektedir.Varsayılan kullanıcılarla giriş yapılmalıdır.`, {
+    position: toast.POSITION.TOP_CENTER,
+  });
+}
 </script>
 
 <style scoped>
