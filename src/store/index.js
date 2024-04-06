@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import UsersService from "../services/users/index";
+import AuthService from "../services/auth/index";
 
 export const useProducts = defineStore('products', {
   state: () => ({
@@ -44,6 +46,43 @@ export const useProducts = defineStore('products', {
     },
     addDiscount(){
       this.totalPrice = this.getTotalPrice * 0.8
+    }
+  },
+})
+
+export const useUser = defineStore('user',{
+  state: () => ({
+    users:null,
+    activeUser:null,
+    token: JSON.parse(localStorage.getItem('token')) || null
+  }),
+  getters: {
+    getAllUser(state){
+      return state.users
+    },
+    getActiveUser(state){
+      return state.activeUser
+    }
+  },
+  actions: {
+    async setUsers(){
+      await UsersService.getAllUsers().then((users)=>{
+        this.users = users
+      })
+    },
+    login(loggedInUser){
+      this.users.map((user) =>{
+        if(user.username == loggedInUser.username && user.password == loggedInUser.password){
+          AuthService.login(user).then((token)=>{
+            localStorage.setItem('token',token)
+          })
+          this.activeUser = user
+        }
+      })
+    },
+    logout(){
+      localStorage.removeItem('token')
+      this.activeUser = null
     }
   },
 })
