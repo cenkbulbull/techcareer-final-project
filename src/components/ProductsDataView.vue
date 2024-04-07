@@ -17,7 +17,7 @@
             class="p-4 border-1 surface-border surface-card border-round flex flex-column justify-content-between"
           >
             <div
-              @click="$router.push('/product/'+item.id)"
+              @click="$router.push('/product/' + item.id)"
               class="surface-50 flex justify-content-center border-round p-3"
             >
               <div class="relative mx-auto">
@@ -67,7 +67,11 @@
                     label="Add to cart"
                     class="flex-auto white-space-nowrap"
                   ></Button>
-                  <Button @click="addFavorites(item)" icon="pi pi-heart" outlined></Button>
+                  <Button
+                    @click="addFavorites(item)"
+                    icon="pi pi-heart"
+                    outlined
+                  ></Button>
                 </div>
               </div>
             </div>
@@ -83,21 +87,37 @@ import { ref, onMounted, watch } from "vue";
 import ProductsService from "../services/products/index";
 import { useRoute } from "vue-router";
 import { useProducts } from "../store/index";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const store = useProducts();
 
-const addFavorites = (product) =>{
-  store.setFavorites(product)
-  toast.success(`${product.title} Favorilere Eklendi`, {
-    position: toast.POSITION.TOP_CENTER,
-  });
-}
+const addFavorites = (product) => {
+  if (store.getFavorites.length > 0) {
+    const favoriteControl = store.getFavorites.find(
+      (favoritedProduct) => favoritedProduct.id === product.id
+    );
+    if (favoriteControl === undefined) {
+      store.setFavorites(product);
+      toast.success(`${product.title} Favorilere Eklendi`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }else{
+      toast.warn(`${product.title} Daha Önce Favorilere Eklenmiş`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  } else {
+    store.setFavorites(product);
+    toast.success(`${product.title} Favorilere Eklendi`, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  }
+};
 
-const addToCart = (product) =>{
-  store.setProducts(product)
-}
+const addToCart = (product) => {
+  store.setProducts(product);
+};
 const route = useRoute();
 
 watch(

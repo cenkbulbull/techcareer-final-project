@@ -90,11 +90,28 @@ onMounted(() => {
 });
 
 const addFavorites = (product) => {
-  store.setFavorites(product);
-  toast.success(`${product.title} Favorilere Eklendi`, {
-    position: toast.POSITION.TOP_CENTER,
-  });
+  if (store.getFavorites.length > 0) {
+    const favoriteControl = store.getFavorites.find(
+      (favoritedProduct) => favoritedProduct.id === product.id
+    );
+    if (favoriteControl === undefined) {
+      store.setFavorites(product);
+      toast.success(`${product.title} Favorilere Eklendi`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }else{
+      toast.warn(`${product.title} Daha Önce Favorilere Eklenmiş`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  } else {
+    store.setFavorites(product);
+    toast.success(`${product.title} Favorilere Eklendi`, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  }
 };
+
 
 const addToCart = (product) => {
   store.setProducts(product);
