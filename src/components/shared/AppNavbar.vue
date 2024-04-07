@@ -2,7 +2,7 @@
   <div class="card">
     <Menubar :model="items">
       <template #start>
-        <img src="../../assets/techcareer.png" alt="" width="200">
+        <img src="../../assets/techcareer.png" alt="" width="150">
       </template>
       <template #item="{ item, props, hasSubmenu, root }">
         <a v-ripple class="flex align-items-center" v-bind="props.action">
